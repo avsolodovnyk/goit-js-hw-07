@@ -11,11 +11,11 @@ function handleSubmit(event) {
   const results = {};
   const formData = new FormData(event.currentTarget);
   formData.forEach((value, name) => {
-    results[name] = value;
+    results[name - 1] = value - 1;
   });
   let countOfRightAnsewers = 0;
   for (const key of Object.keys(results)) {
-    const { answer } = quizData.questions[key - 1];
+    const { answer } = quizData.questions[key];
     Number(results[key]) === answer
       ? (countOfRightAnsewers += 1)
       : (countOfRightAnsewers = countOfRightAnsewers);
@@ -24,7 +24,7 @@ function handleSubmit(event) {
     ? (resultOutput.textContent = `Вы успешно прошли тест ответив на ${countOfRightAnsewers} вопрос(ов) из ${
         quizData.questions.length
       }`)
-    : (resultOutput.textContent = `Вы не прошли тест на ответили правильно  ${countOfRightAnsewers}  вопрос(ов) из ${
+    : (resultOutput.textContent = `Вы не прошли тест, но ответили правильно  на ${countOfRightAnsewers}  вопрос(ов) из ${
         quizData.questions.length
       }`);
 }
@@ -58,7 +58,7 @@ function createQuestionnaire({ title, questions }) {
         const constructedBlock = `
         <li class="li-style">
         <label>
-        <input type="radio" name="${questionsNumberCounter}" value="${questionNumberCounter}" class="radio-style" required="required" />
+        <input type="radio" name="${questionsNumberCounter}" value="${questionNumberCounter}" class="radio-style"  required="required"/>
         ${constructed}
         </label>
         </li>`;
